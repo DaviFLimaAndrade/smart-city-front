@@ -20,7 +20,7 @@ export default function PainelMap({sensores, onClickMarker }) {
 
     return (
         <>
-            <div className='h-[32rem] w-full'>
+            <div className='w-full'>
                 {/* <GoogleMapReact
                     bootstrapURLKeys={{ key: "" }}
                     defaultCenter={defaultProps.center}
@@ -35,7 +35,7 @@ export default function PainelMap({sensores, onClickMarker }) {
 
                 <APIProvider apiKey="AIzaSyC9IOLAvHYrb_7Fll1mEhGpD3aL2PmR29Y">
                     <div className="h-[32rem]">
-                        <Map mapId="9ca6d66d633cf32a" styles="StyledMap" defaultZoom={20} defaultCenter={position} mapTypeControl={false} zoomControl={false}>
+                        <Map mapId="9ca6d00d633cf32a" styles="StyledMap" defaultZoom={20} defaultCenter={position} mapTypeControl={false} zoomControl={false} className="h-[600px]">
                             {sensores.map((sensor) => (
                                 <AdvancedMarker key={sensor.id} position={{lat: sensor.latitude, lng: sensor.longitude}} onClick={() => onClickMarker(sensor)}>
                                     <Pin />

@@ -4,7 +4,7 @@ export default function PainelElement(props) {
     return (
         <>
             <Popover
-                className="w-36"
+                className="w-86 mt=30"
                 showArrow
                 offset={10}
                 placement="bottom"
@@ -21,7 +21,7 @@ export default function PainelElement(props) {
                             },
                         },
                         exit: {
-                            y: "10%",
+                            y: "40%",
                             opacity: 0,
                             duration: 0,
                             transition: {
@@ -34,7 +34,7 @@ export default function PainelElement(props) {
                 }}
             >
                 <PopoverTrigger>
-                    <Card isPressable className="w-32 h-32 bg-transparent shadow-none border">
+                    <Card isPressable className="w-[240px] h-32 my-1 bg-transparent shadow-none border">
                         <h1 className="text-5xl text-black mb-3">{props.measure}</h1>
                         <p className="text-base  text-black">{props.sensorType}</p>
                     </Card>

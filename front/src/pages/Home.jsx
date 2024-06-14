@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import Menu from "../components/Menu";
 import Painel from "../components/Painel";
 import PainelMap from "../components/PainelMap";
-import Celular from "../assets/Celular.png";
-import { Button } from "@nextui-org/react";
 import Footer from "../components/Footer";
 import axios from "axios";
 
@@ -60,22 +58,23 @@ export default function Home() {
 
     return (
         <>
+        <div>
             
-            <section>
-                <div className="bg-black-500 flex-wrap items-center h=100%">
-
-                    <Painel sensor={sensor} sensorData={sensorData}/>
+            <section className="h-[785px]">
+            <Painel sensor={sensor} sensorData={sensorData}/>
+                <div className="bg-black-500 flex-wrap items-center ">
 
                     <PainelMap sensores={sensores} onClickMarker={handleSensorChange} />
-                    <div className="text-right mt-auto mb-3 flex justify-around">
+                    <div className="text-right flex justify-around mt-[100px]">
                         <p className='text-black text-small'>lat -22.345.23 long -47.234.21</p>
-                        <p className="text-black text-small">Senai Roberto Mange  •</p>
+                        <p className="text-black text-small">Senai Roberto Mange </p>
                     </div>
-
                 </div>
             </section>
             <Menu onEscolhaChange={handleEscolhaChange} />
             <Footer />
+
+            </div>
         </>
     );
 }
