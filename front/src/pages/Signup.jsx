@@ -42,7 +42,7 @@ export default function Signup() {
 
 
     return (
-        <div className="bg-slate-50 grid grid-cols-2 min-h-screen">
+        <div className="bg-slate-50 min-h-screen">
 
             <div className="flex items-center justify-center h-screen">
 
@@ -72,15 +72,7 @@ export default function Signup() {
             </div>
 
             <div>
-                <img src={Map} alt="Map"
-                    className="
-                    -rotate-12
-                    fixed
-                    ml-32
-                    mt-60
-                    flip-vertical
-                    transform flip-vertical"
-                />
+
             </div>
 
         </div>

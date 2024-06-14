@@ -61,15 +61,16 @@ export default function Home() {
         <div>
             
             <section className="h-[785px]">
-            <Painel sensor={sensor} sensorData={sensorData}/>
-                <div className="bg-black-500 flex-wrap items-center ">
-
-                    <PainelMap sensores={sensores} onClickMarker={handleSensorChange} />
-                    <div className="text-right flex justify-around mt-[100px]">
+            
+                <div className="bg-black-500 flex-wrap  items-center ">
+                <div className="text-right flex justify-center mt-[90px] gap-[20px] mb-[15px]">
                         <p className='text-black text-small'>lat -22.345.23 long -47.234.21</p>
                         <p className="text-black text-small">Senai Roberto Mange </p>
                     </div>
+                    <PainelMap sensores={sensores} onClickMarker={handleSensorChange} />
+
                 </div>
+                <Painel sensor={sensor} sensorData={sensorData}/>
             </section>
             <Menu onEscolhaChange={handleEscolhaChange} />
             <Footer />
