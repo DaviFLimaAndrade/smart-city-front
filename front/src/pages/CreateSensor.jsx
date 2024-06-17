@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const CreateSensor = () => {
+const CreateOrUpdateSensor = () => {
+    const [id, setId] = useState(null);
     const [nome, setNome] = useState('');
     const [tipo, setTipo] = useState('');
     const [descricao, setDescricao] = useState('');
@@ -21,26 +22,33 @@ const CreateSensor = () => {
         }
     }, []);
 
-    const handleCreateSensor = async () => {
+    const handleSubmit = async () => {
+        const url = id ? `http://127.0.0.1:8000/api/sensores/${id}/` : 'http://127.0.0.1:8000/api/sensores/';
+        const method = id ? 'put' : 'post';
+        
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/sensores/', {
-                nome,
-                tipo,
-                descricao,
-                latitude,
-                longitude,
-                localizacao,
-                responsavel,
-            }, {
+            const response = await axios({
+                method: method,
+                url: url,
+                data: {
+                    nome,
+                    tipo,
+                    descricao,
+                    latitude,
+                    longitude,
+                    localizacao,
+                    responsavel,
+                },
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
-                }
+                },
             });
 
-            if (response.status === 201) {
-                alert('Sensor criado com sucesso!');
+            if (response.status === 200 || response.status === 201) {
+                alert('Sensor salvo com sucesso!');
                 // Limpar os campos do formulário
+                setId(null);
                 setNome('');
                 setTipo('');
                 setDescricao('');
@@ -49,17 +57,27 @@ const CreateSensor = () => {
                 setLocalizacao('');
                 setResponsavel('');
             } else {
-                alert('Falha ao criar o sensor');
+                alert('Falha ao salvar o sensor');
             }
         } catch (error) {
-            console.error('Erro ao criar o sensor:', error);
-            alert('Falha ao criar o sensor');
+            console.error('Erro ao salvar o sensor:', error);
+            alert('Falha ao salvar o sensor');
         }
     };
 
     return (
         <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-6">Criar Sensor</h2>
+            <h2 className="text-2xl font-bold mb-6">{id ? 'Atualizar Sensor' : 'Criar Sensor'}</h2>
+            <div className="mb-4">
+                <label className="block text-sm font-semibold mb-2">ID do Sensor (opcional para criar)</label>
+                <input
+                    type="text"
+                    className="w-full px-4 py-2 border rounded-md"
+                    value={id || ''}
+                    onChange={(e) => setId(e.target.value)}
+                    placeholder="ID do Sensor"
+                />
+            </div>
             <div className="mb-4">
                 <label className="block text-sm font-semibold mb-2">Nome do Sensor</label>
                 <input
@@ -131,12 +149,12 @@ const CreateSensor = () => {
             </div>
             <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                onClick={handleCreateSensor}
+                onClick={handleSubmit}
             >
-                Criar Sensor
+                {id ? 'Atualizar Sensor' : 'Criar Sensor'}
             </button>
         </div>
     );
 };
 
-export default CreateSensor;
+export default CreateOrUpdateSensor;
