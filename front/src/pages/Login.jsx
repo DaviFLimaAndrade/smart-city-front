@@ -1,18 +1,13 @@
-import Map from "../assets/Map.png"
-import InputPassword from "../components/InputPassword"
-import { Button } from "@nextui-org/react"
-import { Link } from "react-router-dom"
-import { Input } from "@nextui-org/react"
-import Menu from "../components/Menu"
-import { useState, useEffect } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { Button, Input } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
     const navigate = useNavigate();
-
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
     const fetchToken = async () => {
         if (username && password) {
@@ -23,54 +18,46 @@ export default function Login() {
                         username,
                         password
                     }
-                )
-                sessionStorage.setItem('token', response.data.access)
-                sessionStorage.setItem('token_refresh', response.data.refresh)
-                navigate("/home")
+                );
+                sessionStorage.setItem('token', response.data.access);
+                sessionStorage.setItem('token_refresh', response.data.refresh);
+                navigate("/");
             } catch (error) {
-                console.error("Failed to fetch token:", error)
+                setError("Failed to fetch token. Please check your credentials.");
+                console.error("Failed to fetch token:", error);
             }
         } else {
-            alert("Please enter both username and password")
+            setError("Please enter both username and password");
         }
-    }
+    };
 
     return (
-        <div className="bg-slate-50 grid grid-cols-2 min-h-screen">
-            <div>
-                <img src={Map} alt="Map"
-                    className="
-                    rotate-12
-                    fixed
-                    xl:mt-40
-                    mr-96"
-                />
-            </div>
-
-            <div className="flex items-center justify-center h-screen">
-                <form onSubmit={(e) => { e.preventDefault(); fetchToken(); }}>
-                    <div className="">
-                        <h1 className="text-5xl flex justify-center mb-5">Bem-vindo de volta!</h1>
-                        <p className="text-xl flex justify-center w-3/5 m-auto text-center text-gray-500">Estamos felizes em vê-lo de volta. Por favor, entre com sua conta para continuar aproveitando nossos serviços.</p>
-                    </div>
-
-                    <div className="w-2/4 m-auto grid gap-12 py-12">
-                        <Input type="text" variant="underlined" label="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                        <Input type="password" variant="underlined" label="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        {/* <InputPassword label="Senha" value={password} onChange={(e) => setPassword(e.target.value)} /> */}
-                    </div>
-
-                    <div className="w-2/4 m-auto py-5">
-                        <Button type="submit" color="primary" className="w-1/4 m-auto flex justify-center">Entrar</Button>
-
-                        <div className="flex justify-center m-auto mt-5">
-                            <span className="text-gray-500">Não possui cadastro?</span>
-                            <Link to="/signup" className="text-sky-500 ml-1">Clique aqui</Link>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
+        <div className="bg-slate-50 min-h-screen flex items-center justify-center">
+            <form onSubmit={(e) => { e.preventDefault(); fetchToken(); }} className="bg-white p-8 rounded-lg shadow-md w-96">
+                <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
+                {error && <div className="mb-4 text-red-600 text-center">{error}</div>}
+                <div className="mb-4">
+                    <Input
+                        type="text"
+                        variant="underlined"
+                        label="Username"
+                        fullWidth
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </div>
+                <div className="mb-6">
+                    <Input
+                        type="password"
+                        variant="underlined"
+                        label="Password"
+                        fullWidth
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <Button type="submit" color="primary" className="w-full">Entrar</Button>
+            </form>
         </div>
-    )
+    );
 }

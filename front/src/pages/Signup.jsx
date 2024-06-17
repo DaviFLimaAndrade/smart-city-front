@@ -1,6 +1,5 @@
-import Map from "../assets/Map_flipped.png"
 import { Button, Input } from "@nextui-org/react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
 
@@ -20,36 +19,33 @@ export default function Signup() {
 
     const createUser = async () => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/create_user/',
-                {
-                    username,
-                    email,
-                    password
-                });
-
-            const resp = await axios.post('http://127.0.0.1:8000/api/token/',
-                {
-                    username,
-                    password
-                })
-            setToken(resp.data.access)
-            navigate("/home")
-        }
-        catch (error) {
-            console.log(error)
+            const response = await axios.post('http://127.0.0.1:8000/api/create_user/', {
+                username,
+                email,
+                password
+            });
+    
+            const resp = await axios.post('http://127.0.0.1:8000/api/token/', {
+                username,
+                password
+            });
+            setToken(resp.data.access);
+            navigate("/");
+        } catch (error) {
+            console.error("Failed to create user:", error);
         }
     };
+    
 
 
     return (
-        <div className="bg-slate-50 min-h-screen">
+        <div className="min-h-screen">
 
             <div className="flex items-center justify-center h-screen">
 
                 <form action="">
                     <div className="">
-                        <h1 className="text-5xl flex justify-center mb-5">Bem-vindo à SmartCity!</h1>
-                        <p className="text-xl flex justify-center w-3/5 m-auto text-center text-gray-500">Por gentileza, insira as informações necessárias no formulário abaixo para a criação da sua conta.</p>
+                        <h1 className="text-5xl flex justify-center mb-5">Cadastro de usuario</h1>
                     </div>
 
                     <div className="w-2/4 m-auto grid gap-12 py-12">
@@ -62,8 +58,6 @@ export default function Signup() {
                         <Button type="button" color="primary" className="w-1/4 m-auto flex justify-center" onClick={() => createUser()}>Cadastrar</Button>
 
                         <div className="flex justify-center m-auto mt-5">
-                            <span className="text-gray-500">Já possui cadastro?</span>
-                            <Link to="/login" className="text-sky-500 ml-1">Clique aqui</Link>
                         </div>
                     </div>
 
